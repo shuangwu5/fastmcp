@@ -405,9 +405,8 @@ class OpenAPITool(Tool):
                 openapi_headers[p.name.lower()] = str(kwargs[p.name])
         headers.update(openapi_headers)
 
-        # Add headers from the current MCP client HTTP request (these take precedence)
-        mcp_headers = get_http_headers()
-        headers.update(mcp_headers)
+        # Add headers from the client (these take precedence)
+        headers.update(self._client.headers)
 
         # Prepare request body
         json_data = None
