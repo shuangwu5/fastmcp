@@ -405,6 +405,8 @@ class OpenAPITool(Tool):
                 openapi_headers[p.name.lower()] = str(kwargs[p.name])
         headers.update(openapi_headers)
 
+        mcp_headers = get_http_headers()
+        headers.update(mcp_headers)
         # Add headers from the client (these take precedence)
         headers.update(self._client.headers)
 
@@ -558,6 +560,8 @@ class OpenAPIResource(Resource):
             headers = {}
             mcp_headers = get_http_headers()
             headers.update(mcp_headers)
+            # Add headers from the client (these take precedence)
+            headers.update(self._client.headers)
 
             response = await self._client.request(
                 method=self._route.method,
